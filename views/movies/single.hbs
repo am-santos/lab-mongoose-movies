@@ -1,0 +1,16 @@
+<h2>Movie Profile</h2>
+
+<h3>{{movie.name}},</h3>
+<h5>{{movie.occupation}}</h5>
+<h3>{{movie.catchPhrase}}</h3>
+
+<form action="/celebrities/{{movie._id}}/edit" method="get">
+  <button>Edit Profile</button>
+</form>
+
+<form action="/celebrities" method="get">
+  <button>List of All Celebrities</button>
+</form>
+<form action="/Movies" method="get">
+  <button>List of All Movies</button>
+</form>

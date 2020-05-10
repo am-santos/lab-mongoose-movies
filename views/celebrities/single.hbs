@@ -1,0 +1,15 @@
+<h2>Celebrity Profile</h2>
+
+<h3>{{celebrity.name}},</h3>
+<h5>{{celebrity.occupation}}</h5>
+<h3>{{celebrity.catchPhrase}}</h3>
+
+<form action="/celebrities/{{celebrity._id}}/edit" method="get">
+  <button>Edit Profile</button>
+</form>
+
+<form action="/celebrities" method="get">
+  <button>List of All Celebrities</button>
+</form>
+
+
