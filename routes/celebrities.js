@@ -85,8 +85,7 @@ router.post('/:celebrityId', (req, res) => {
       catchPhrase: editedCelebrity.catchPhrase
     }
   )
-    .then((document) => {
-      console.log('updated document', document);
+    .then(() => {
       res.redirect('/celebrities');
     })
     .catch((err) => {

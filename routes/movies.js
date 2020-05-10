@@ -15,6 +15,10 @@ router.get('/', (req, res) => {
 });
 
 // Create a new movie
+router.get('/create', (req, res) => {
+  res.render('movies/create');
+});
+
 router.post('/create', (req, res) => {
   const newMovie = req.body;
   Movie.create({
@@ -23,19 +27,70 @@ router.post('/create', (req, res) => {
     plot: newMovie.plot
   })
     .then(() => {
-      res.redirect('movies');
+      res.redirect('/movies');
     })
     .catch(() => {
       console.log('Error occured when creating a new Movie', err);
       res.render('movies/create');
     });
 });
+
 // Get specific movie
+router.get('/:movieId', (req, res) => {
+  const movieId = req.params.movieId;
+
+  Movie.findById({ _id: movieId })
+    .then((movie) => {
+      res.render('movies/single', { movie });
+    })
+    .catch((err) => {
+      console.log('Error on getting movie single page', err);
+    });
+});
 
 // Delete a movie
+router.post('/:movieId/delete', (req, res) => {
+  const movieId = req.params.movieId;
+
+  Movie.findByIdAndRemove({ _id: movieId })
+    .then(() => {
+      res.redirect('/movies');
+    })
+    .catch((err) => {
+      console.log('error on deleting a movie', err);
+    });
+});
 
 // Edit a movie
-//  - GET
-//  - POST
+router.get('/:movieId/edit', (req, res) => {
+  const movieId = req.params.movieId;
+
+  Movie.findById({ _id: movieId })
+    .then((movie) => {
+      res.render('movies/edit', { movie });
+    })
+    .catch((err) => {
+      console.log('Error editing movie', err);
+    });
+});
+
+router.post('/:movieId/edit', (req, res) => {
+  const movieId = req.params.movieId;
+  const editedMovie = req.body;
+  Movie.updateOne(
+    { _id: movieId },
+    {
+      title: editedMovie.title,
+      genre: editedMovie.genre,
+      plot: editedMovie.plot
+    }
+  )
+    .then(() => {
+      res.redirect('/movies');
+    })
+    .catch((err) => {
+      console.log('Error on updating a movie', err);
+    });
+});
 
 module.exports = router;
